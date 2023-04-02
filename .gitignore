@@ -1,0 +1,16 @@
+venv/
+bin/
+lib/
+*.pyc
+__pycache__/
+pyvenv.cfg
+
+instance/
+
+.pytest_cache/
+.coverage
+htmlcov/
+
+dist/
+build/
+*.egg-info/

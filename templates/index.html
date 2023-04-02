@@ -1,0 +1,41 @@
+{% include "head.html" %}
+    <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1>APpI</h1>
+      </div>
+    <div>
+    <div class="row">
+	    <div class="col-md-6">
+	    	<h2>Play a radio station</h2>
+	    </div>
+		<div class="col-md-6">
+			<h2>Pi Information</h2>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<ul>
+			{% for station in stations %}
+				<li>
+					<a data="/radio/{{ station }}" class="playStation">Play {{ station }}</a>
+					<a data="/radio/{{ station }}" class="stopStation" hidden>Stop {{ station }}</a>
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+		<div class="col-md-2">
+			<h3>CPU: {{ sysinfo['cpu'] }}</h3>
+		</div>
+		<div class="col-md-2">
+			<h3>Disk: {{ sysinfo['disk'][2]}}</h3>
+		</div>
+		<div class="col-md-2">
+			{% if sysinfo['network'][0] == True %}
+				<h3>Connected: {{ sysinfo['network'][1] }}</h3>
+			{% else %}
+				<h3>Not Connected</h3>
+			{% endif %}
+		</div>
+	</div>
+{% include "footer.html" %}

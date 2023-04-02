@@ -1,0 +1,14 @@
+radio:
+  stations:
+    "889": "https://wyms.streamguys1.com/live.m3u"
+    "hyfn": "https://wyms.streamguys1.com/hyfin.m3u"
+    "414music": "https://wyms.streamguys1.com/414music_aac.m3u"
+    "rhythmlab": "https://wyms.streamguys1.com/rhythmLabRadio.m3u"
+    "wuwm": "http://wuwm.streamguys1.com/live.m3u"
+  xspf:
+    "889": "https://wyms.streamguys1.com/live.xspf"
+    "hyfn": "https://wyms.streamguys1.com/hyfin.xspf"
+    "414music": "https://wyms.streamguys1.com/414music_aac.xspf"
+    "rhythmlab": "https://wyms.streamguys1.com/rhythmLabRadio.xspf"
+    "wuwm": "http://wuwm.streamguys1.com/live.xspf"
+  nowplaying:

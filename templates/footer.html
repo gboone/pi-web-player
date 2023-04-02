@@ -1,0 +1,50 @@
+	{{ bootstrap.load_js() }}
+  <script>
+  	// when a link with the class `playStation` is clicked, send a GET request to the URL contained in the `data` attribute in plain JavaScript.
+  	var links = document.getElementsByClassName('playStation');
+  	for (var i = 0; i < links.length; i++) {
+  		links[i].addEventListener('click', function(e) {
+  			e.preventDefault();
+  			var url = this.getAttribute('data')+"?play";
+  			var request = new XMLHttpRequest();
+  			request.open('GET', url, true);
+  			request.send();
+  		});
+  	}
+  	// when a link with the class `playStation` is clicked, find the link with the same `data` attribute with the class `stopStation`. Set the `playStation` element to hidden and remove the `hidden` attribute from stopStation.
+  	var links = document.getElementsByClassName('playStation');
+  	for (var i = 0; i < links.length; i++) {
+  		links[i].addEventListener('click', function(e) {
+  			e.preventDefault();
+  			var url = this.getAttribute('data');
+  			var stopStation = document.querySelector('[data="' + url + '"].stopStation');
+  			this.setAttribute('hidden', 'hidden');
+  			stopStation.removeAttribute('hidden');
+  		});
+  	}
+  	// when a link with the class `stopStation` is clicked, send a GET request to the URL contained in the `data` attribute in plain JavaScript.
+  	var links = document.getElementsByClassName('stopStation');
+  	for (var i = 0; i < links.length; i++) {
+  		links[i].addEventListener('click', function(e) {
+  			e.preventDefault();
+  			var url = this.getAttribute('data')+"?stop";
+  			var request = new XMLHttpRequest();
+  			request.open('GET', url, true);
+  			request.send();
+  		});
+  	}
+  	// when a link with the class `stopStation` is clicked, find the link with the same `data` attribute with the class `playStation`. Set the `stopStation` element to hidden and remove the `hidden` attribute from the `playStation`.
+  	var links = document.getElementsByClassName('stopStation');
+  	for (var i = 0; i < links.length; i++) {
+  		links[i].addEventListener('click', function(e) {
+  			e.preventDefault();
+  			var url = this.getAttribute('data');
+  			var playStation = document.querySelector('[data="' + url + '"].playStation');
+  			this.setAttribute('hidden', 'hidden');
+  			playStation.removeAttribute('hidden');
+  		});
+  	}
+  
+  </script>
+  </body>
+</html>
