@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 import sys
 import platform
 from include import localradio, localsystem, localtime, localnetwork
-from include import streamRadio, loadconfig
+from include import streamRadio, loadconfig, templatefunctions
 import vlc
 import subprocess
 from flask_bootstrap import Bootstrap5
@@ -32,16 +32,11 @@ bootstrap = Bootstrap5(app)
 
 @app.route("/")
 def index():
-    sysinfo = {
-        "cpu": localsystem.getCPU(),
-        "disk": localsystem.getDF(),
-        "network": ( localnetwork.isConnected(), localnetwork.currentIP() )
-    }
+    status = templatefunctions.getIndexData(PLAYERS)
     return render_template(
         "index.html",
-        sysinfo=sysinfo,
-        bootstrap=bootstrap,
-        stations=STATIONS
+        status=status,
+        bootstrap=bootstrap
     )
 
 
@@ -112,35 +107,22 @@ def radio():
 @app.route("/radio/<stream>", methods=["GET"])
 def streamPlayStop(stream):
     player = PLAYERS[stream]
-    amixercmd = 'amixer sget "Headphone"'
-    vol = subprocess.check_output(amixercmd, shell=True) if PLATFORM not in UNSUPPORTED else NOUPPORT
+    mix = 'pulsemixer --get-volume'
+    vol = subprocess.check_output(mix, shell=True) if PLATFORM not in UNSUPPORTED else NOUPPORT
     status = {
         "status": "",
         "station": stream,
         "url": STATIONS[stream],
-        "vol": vol
+        "vol": vol,
+        "last-played": ""
     }
-
-    # Determine what to do. If "play" supplied, play the requested stream
-    if 'play' in request.args.keys():
-        if not player.is_playing():
-            player.play()
-    # if "stop" supplied, stop the requested stream
-    elif 'stop' in request.args.keys():
-        player.stop()
-        status['status'] = "stopped"
-    # if "volume" specified, set the volume to the requested value
-    elif 'volume' in request.args.keys():
-        volume = request.args.get('volume')
-        status['volume'] = volume
-        # Do nothing on Mac, Windows, other unsupported systems
-        if PLATFORM in UNSUPPORTED:
-            print("{}} Would have set to {}%".format(NOSUPPORT, volume))
-        # else adjust the volume.
-        else:
-            setVol = "amixer sset 'Headphone' {}%".format(volume)
-            subprocess.check_output(setVol, shell=True)
-
+    status = templatefunctions.radioStreamQueryArgs(
+        request,
+        status,
+        player,
+        UNSUPPORTED,
+        PLATFORM
+    )
     status['status'] = "playing" if player.is_playing() else "stopped"
     return status
 

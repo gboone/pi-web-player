@@ -1,41 +1,61 @@
 {% include "head.html" %}
-    <div class="container">
+	
+  <div class="container">
+  
     <div class="row">
       <div class="col-md-12">
         <h1>APpI</h1>
       </div>
     <div>
-    <div class="row">
-	    <div class="col-md-6">
-	    	<h2>Play a radio station</h2>
-	    </div>
-		<div class="col-md-6">
-			<h2>Pi Information</h2>
+
+		<div class="row">
+			<div id="now-playing" class="col-md-6">
+				{% if status['playing-stations'][0] %}
+					<h3>Now Playing</h3>
+					{% for station in status['playing-stations'] %}
+						<h4>{{ station }}</h4>
+					{% endfor %}
+				{% else %}
+					<h3>Nothing playing now</h3>
+						<h4>Choose a station below:</h4>
+				{% endif %}
+			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-6">
-			<ul>
-			{% for station in stations %}
-				<li>
-					<a data="/radio/{{ station }}" class="playStation">Play {{ station }}</a>
-					<a data="/radio/{{ station }}" class="stopStation" hidden>Stop {{ station }}</a>
-				</li>
-			{% endfor %}
-			</ul>
+		<div class="row">
+			<div class="col-md-6">
+				<ul>
+				{% for station in status['all-stations'] %}
+					{% if station in status['playing-stations'] %}
+						<li><a href="#" class="station" data-station="{{ station }}" data-action="stop">Stop {{ station }}</a></li>
+					{% else %}
+						<li><a href="#" class="station" data-station="{{ station }}" data-action="play">Play {{ station }}</a></li>
+					{% endif %}
+				{% endfor %}
+				</ul>
+			</div>
+			<div class="col-md-3">
+				<h3>Network</h3>
+				{% if status['sysinfo']['network'][0] %}
+					<p>Raspberry Pi is connected!</p>
+					<p><strong>IP Address:</strong>{{ status['sysinfo']['network'][1] }}</p>
+				{% else %}
+					<p>Raspberry Pi is not connected!</p>
+					<p>Maybe there's a network outage or the Pi is unplugged.</p>
+				{% endif %}
+			</div>
 		</div>
-		<div class="col-md-2">
-			<h3>CPU: {{ sysinfo['cpu'] }}</h3>
-		</div>
-		<div class="col-md-2">
-			<h3>Disk: {{ sysinfo['disk'][2]}}</h3>
-		</div>
-		<div class="col-md-2">
-			{% if sysinfo['network'][0] == True %}
-				<h3>Connected: {{ sysinfo['network'][1] }}</h3>
-			{% else %}
-				<h3>Not Connected</h3>
-			{% endif %}
-		</div>
-	</div>
+		<!-- <row>
+			<div class="col-md-12">
+				<h3>Available keys</h3>
+				<pre>{{ status.keys() }}</pre>
+				<h3>Sys Info</h3>
+				<pre>{{ status['sysinfo'] }}</pre>
+				<h3>Now Playing</h3>
+				<pre>{{ status['playing-stations'] }}</pre>
+				<h3>Stopped stations</h3>
+				<pre>{{ status['stopped-stations']}}</pre>
+				<h3>Available stations</h3>
+				<pre>{{ status['all-stations'] }}</pre>
+			</div>
+		</row> -->
 {% include "footer.html" %}
