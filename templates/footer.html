@@ -39,8 +39,12 @@
 		} else {
 			radioStatus.textContent = "Now Playing"
 			stationName.removeAttribute('hidden')
-			var stationText = getStationInfo(station)
-			stationName.textContent = stationText['now_playing'] + " on " + station
+			if station == "889" {
+				var stationText = getStationInfo(station)
+				stationName.textContent = stationText['now_playing'] + " on " + station
+			} else {
+				stationName.textContent = station
+			}
 			var newTextStation = "Stop "
 		}
 		return newTextStation

@@ -1,6 +1,6 @@
 README.md
 
-To install:
+## Installation
 
 Install Python 3
 
@@ -47,4 +47,24 @@ Example: `flask run --host=192.168.0.73`
 Seve the site with a specific IP and port:
 
 Example: `flask run --host=192.168.0.73 --port=8000`
+
+## Configuration
+
+The file `config.yml` includes a list of radio stations and their XSPF file links. While the XSPF standard is well documented, stations don't necessarily follow it perfectly. For example:
+
+For 889 - Radio Milwaukee's flagship station, the artist and song title are stored together at `playlist.trackList.track.title`
+
+```
+<playlist xmlns="http://xspf.org/ns/0/" version="1">
+  <title/>
+  <creator/>
+  <trackList>
+    <track>
+      <location>http://wyms.streamguys1.com:80/live</location>
+      <title>Thinking About You-Beck</title>
+      …
+    </track>
+  </tracklist>
+</playlist>
+```
 

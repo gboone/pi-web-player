@@ -5,10 +5,12 @@ radio:
     "414music": "https://wyms.streamguys1.com/414music_aac.m3u"
     "rhythmlab": "https://wyms.streamguys1.com/rhythmLabRadio.m3u"
     "wuwm": "http://wuwm.streamguys1.com/live.m3u"
+    "the current": "https://current.stream.publicradio.org/current.aac"
+    "WTMJ – Brewers Radio Network": "https://prod-3-93-57-141.wostreaming.net/goodkarma-wtmjamaac-hlsc.m3u8/?source=v7player&user-id=b0f14cb5a95d32cc5f332cb5d257e072&us_privacy=1---&z=9641d8d433a44dabb641a0d3ea3c7ba9&p=1"
   xspf:
     "889": "https://wyms.streamguys1.com/live.xspf"
     "hyfn": "https://wyms.streamguys1.com/hyfin.xspf"
     "414music": "https://wyms.streamguys1.com/414music_aac.xspf"
     "rhythmlab": "https://wyms.streamguys1.com/rhythmLabRadio.xspf"
-    "wuwm": "http://wuwm.streamguys1.com/live.xspf"
+    "WUWM": "http://wuwm.streamguys1.com/live.xspf"
   nowplaying:
