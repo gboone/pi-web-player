@@ -21,7 +21,7 @@ sudo apt install python3 python3-dev python3-venv
 Install audio components:
 
 ```
-sudo apt install pulseaudio pulseaudio-module-zeroconf alsa-utils avahi-daemon pamixer
+sudo apt install pulseaudio pulseaudio-module-zeroconf alsa-utils avahi-daemon pulsemixer
 ```
 
 Clone this repo, then `cd` into the clone directory and create, then activate a virtual environment, and install dependencies.
@@ -33,3 +33,18 @@ pip install -r requirements.txt
 ```
 
 Start pulseaduio: `pulseaudio -D`
+
+Serve the site:
+
+`flask run`
+
+Serve the site from a specific IP:
+
+By default flask serves at loopback. To define a public IP, run with `--host`.
+
+Example: `flask run --host=192.168.0.73`
+
+Seve the site with a specific IP and port:
+
+Example: `flask run --host=192.168.0.73 --port=8000`
+

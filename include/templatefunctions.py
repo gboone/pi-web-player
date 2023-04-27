@@ -55,6 +55,6 @@ def radioStreamQueryArgs(request, status, player, UNSUPPORTED, PLATFORM):
             print("{}} Would have set to {}%".format(UNSUPPORTED, volume))
         # else adjust the volume.
         else:
-            setVol = "amixer sset 'Headphone' {}%".format(volume)
+            setVol = "pulsemixer --set-volume ' {}%".format(volume)
             subprocess.check_output(setVol, shell=True)
     return status
