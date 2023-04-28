@@ -107,13 +107,10 @@ def radio():
 @app.route("/radio/<stream>", methods=["GET"])
 def streamPlayStop(stream):
     player = PLAYERS[stream]
-    mix = 'pulsemixer --get-volume'
-    vol = subprocess.check_output(mix, shell=True) if PLATFORM not in UNSUPPORTED else NOUPPORT
     status = {
         "status": "",
         "station": stream,
         "url": STATIONS[stream],
-        "vol": vol,
         "last-played": ""
     }
     status = templatefunctions.radioStreamQueryArgs(
