@@ -111,7 +111,9 @@ def streamPlayStop(stream):
         "status": "",
         "station": stream,
         "url": STATIONS[stream],
-        "last-played": ""
+        "last-played": "",
+        "play": request.base_url + "?play",
+        "stop": request.base_url + "?stop"
     }
     status = templatefunctions.radioStreamQueryArgs(
         request,
@@ -135,12 +137,13 @@ def radioStopAll():
 @app.route("/radio/streams/")
 def radioStations():
     streams = {}
+    baseurl = request.base_url
     for station in STATIONS:
         streams[station] = {
             "name": station,
             "streamURL": STATIONS[station],
-            "API-route": "/radio/{}/".format(station),
-            "play": "/radio/{}/?play".format(station),
-            "stop": "/radio/{}/?stop".format(station)
+            "API-route": "{}radio/{}/".format(baseurl, station),
+            "play": "{}radio/{}/?play".format(baseurl, station),
+            "stop": "{}radio/{}/?stop".format(baseurl, station)
         }
     return streams

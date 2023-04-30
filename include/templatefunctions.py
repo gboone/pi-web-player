@@ -57,4 +57,6 @@ def radioStreamQueryArgs(request, status, player, UNSUPPORTED, PLATFORM):
         else:
             setVol = "pulsemixer --set-volume ' {}%".format(volume)
             subprocess.check_output(setVol, shell=True)
+    else:
+        status['status'] = "playing" if player.is_playing() else "stopped"
     return status
