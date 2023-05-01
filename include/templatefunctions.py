@@ -3,6 +3,22 @@ from include import localtime, streamRadio
 import subprocess
 
 
+def getStationData(stations, request, players):
+    streams = {}
+    baseurl = request.url_root
+    for station in stations:
+        is_playing = "playing" if players[station].is_playing() else "stopped"
+        streams[station] = {
+            "name": station,
+            "streamURL": stations[station],
+            "API-route": "{}radio/{}/".format(baseurl, station),
+            "play": "{}radio/{}/?play".format(baseurl, station),
+            "stop": "{}radio/{}/?stop".format(baseurl, station),
+            "status": is_playing
+        }
+    return streams
+
+
 # return a tuple of players where is_playing() is True
 def getActivePlayers(PLAYERS):
     activePlayers = []

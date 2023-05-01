@@ -136,14 +136,5 @@ def radioStopAll():
 
 @app.route("/radio/streams/")
 def radioStations():
-    streams = {}
-    baseurl = request.base_url
-    for station in STATIONS:
-        streams[station] = {
-            "name": station,
-            "streamURL": STATIONS[station],
-            "API-route": "{}radio/{}/".format(baseurl, station),
-            "play": "{}radio/{}/?play".format(baseurl, station),
-            "stop": "{}radio/{}/?stop".format(baseurl, station)
-        }
+    streams = templatefunctions.getStationData(STATIONS, request, PLAYERS)
     return streams
