@@ -62,8 +62,12 @@ for (var i = 0; i < links.length; i++) {
 		var request = new XMLHttpRequest();
 
 		request.open('GET', url, true);
+		if ( request.status == 200 ) {
+			console.log("Radio station " + station + " did " + playOrStop)
+		} else {
+			console.log("Radio station " + station + " failed to " + playOrStop)
+		}
 		request.send();
-		
 		this.setAttribute('data-action', newAction)
 		var newTextStation = newActionText(newAction, station)	
 		this.textContent = newTextStation + this.getAttribute('data-station')
