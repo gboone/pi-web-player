@@ -13,7 +13,7 @@
 				{% if now_playing|length > 0 %}
 					<h3>Now Playing</h3>
 					{% for station in now_playing %}
-						<h4>{{ station }}</h4>
+						<h4>{{ status['stations'][station]['nicename'] }}</h4>
 					{% endfor %}
 				{% else %}
 					<h3>Nothing playing now</h3>
@@ -27,12 +27,12 @@
 					{% if status['stations'][station]['status'] == "playing" %}
 						<span class="station-data">
 							<img class="station-logo" src="{{ url_for('static', filename='img/'+ status['stations'][station]['logo'] ) }}" />
-							<button id="button-{{station}}" class="station" data-station="{{station}}" data-action="stop" data-target="{{ status['stations'][station]['stop'] }}" >Stop</button>
+							<button id="button-{{station}}" class="station" data-station="{{status['stations'][station]['nicename']}}" data-action="stop" data-target="{{ status['stations'][station]['stop'] }}" >Stop</button>
 						</span>
 					{% else %}
 						<span class="station-data">
 							<img  class="station-logo" src="{{ url_for('static', filename='img/'+ status['stations'][station]['logo'] ) }}" />
-							<button id="button-{{station}}" class="station" data-station="{{station}}" data-action="play" data-target="{{ status['stations'][station]['play'] }}">Play</button>
+							<button id="button-{{station}}" class="station" data-station="{{status['stations'][station]['nicename']}}" data-action="play" data-target="{{ status['stations'][station]['play'] }}">Play</button>
 						</span>
 					{% 	endif %}
 				{% endfor %}

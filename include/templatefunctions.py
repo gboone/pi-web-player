@@ -12,6 +12,7 @@ def getStationData(stations, request, players):
             "API-route": "{}radio/{}/".format(baseurl, station),
             "logo": stations[station]['logo'],
             "name": station,
+            "nicename": stations[station]['nicename'],
             "play": "{}radio/{}?play".format(baseurl, station),
             "stop": "{}radio/{}?stop".format(baseurl, station),
             "streamURL": stations[station]['stream'],
