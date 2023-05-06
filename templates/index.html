@@ -24,9 +24,9 @@
 		<div class="row">
 			<div class="col-md-6">
 				{% for station in status['stations'] %}
-					{% if status['stations'][station]['playing'] == "playing" %}
+					{% if status['stations'][station]['status'] == "playing" %}
 						<span class="station-data">
-							<img class="station-logo" src="{{ url_for('static', 'img/' + status['stations'][station]['logo'] ) }}" />
+							<img class="station-logo" src="{{ url_for('static', filename='img/'+ status['stations'][station]['logo'] ) }}" />
 							<button id="button-{{station}}" class="station" data-station="{{station}}" data-action="stop" data-target="{{ status['stations'][station]['stop'] }}" >Stop</button>
 						</span>
 					{% else %}

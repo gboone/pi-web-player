@@ -33,7 +33,7 @@ bootstrap = Bootstrap5(app)
 @app.route("/")
 def index():
     status = templatefunctions.getIndexData(STATIONS, request, PLAYERS)
-    now_playing = []
+    now_playing = templatefunctions.getActivePlayers(PLAYERS)
     return render_template(
         "index.html",
         status=status,
