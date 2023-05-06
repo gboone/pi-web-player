@@ -5,8 +5,8 @@ var radioEndpoint = "/radio/"
 var nowPlayingBlock = document.getElementById("now-playing")
 var radioStatus = nowPlayingBlock.querySelector('h3')
 var stationName = nowPlayingBlock.querySelector('h4')
-var links = document.getElementsByClassName('station');
-	
+var buttons = document.getElementsByClassName('station');
+var stopAllButton = document.getElementById("button-stop-all")
 
 function setNewAction( playOrStop ) {
 	if ( playOrStop == "stop" ) {
@@ -18,11 +18,24 @@ function setNewAction( playOrStop ) {
 }
 
 
+function getNewURL( url, newAction ) {
+	if ( newAction == "play" ) {
+		var url = url.replace("stop", "play")
+	} else {
+		var url = url.replace("play", "stop")
+	}
+	return url
+}
+
+
 function getStationInfo( station ) {
 	var request = new XMLHttpRequest();
+
 	var url = siteURL + radioEndpoint
-	request.open('GET', url, false)
+	console.log(url)
+	request.open('GET', url, true)
 	request.send()
+	console.log(JSON.parse(request.response)['now_playing'])
 	var data = JSON.parse(request.response)
 	return data
 }
@@ -32,17 +45,11 @@ function newActionText( newAction, station ) {
 	if ( newAction == "play" ) {
 		radioStatus.textContent = "Nothing playing now"
 		stationName.textContent = "Choose a station below"
-		var newTextStation = "Play " 
+		var newTextStation = "Play" 
 	} else {
-		radioStatus.textContent = "Now Playing"
+		radioStatus.textContent = "Now playing: " + station
 		stationName.removeAttribute('hidden')
-		if ( station == "889" ) {
-			var stationText = getStationInfo(station)
-			stationName.textContent = stationText['now_playing'] + " on " + station
-		} else {
-			stationName.textContent = station
-		}
-		var newTextStation = "Stop "
+		var newTextStation = "Stop"
 	}
 	return newTextStation
 	}
@@ -51,25 +58,34 @@ function newActionText( newAction, station ) {
 // When a link with the class `station` is clicked, get the data-station and 
 // data-action attributes. Then, send a GET request to the siteURL + radioEndpoint
 // with the `data-action` in the URL.
-for (var i = 0; i < links.length; i++) {
-	links[i].addEventListener('click', function(e) {
+for (var i = 0; i < buttons.length; i++) {
+	buttons[i].addEventListener('click', function(e) {
 		e.preventDefault();
 		var playOrStop = this.getAttribute('data-action')
-		var newAction = setNewAction( playOrStop )
+		var url = this.getAttribute('data-target')
 		var station = this.getAttribute('data-station')
-		
-		var url = siteURL + radioEndpoint + station + "?"+playOrStop
+		// the stop all button will have data-station "all" and data-action "stop-all"
+		// when this happens, we need to set the URL to "/radio/stop-all/"
+
 		var request = new XMLHttpRequest();
 
 		request.open('GET', url, true);
-		if ( request.status == 200 ) {
-			console.log("Radio station " + station + " did " + playOrStop)
-		} else {
-			console.log("Radio station " + station + " failed to " + playOrStop)
+		request.onload = () => {
+			if ( request.status == 200 ) {
+				console.log("Radio station " + station + " did: " + playOrStop)
+			} else {
+				console.log("Radio station " + station + " failed to " + playOrStop + " with status " + request.status)
+			}
 		}
 		request.send();
+		// update buttons with new actions, text, and URLs
+		var newAction = setNewAction( playOrStop )
 		this.setAttribute('data-action', newAction)
-		var newTextStation = newActionText(newAction, station)	
-		this.textContent = newTextStation + this.getAttribute('data-station')
+		var newTextStation = newActionText(newAction, station)
+		this.textContent = newTextStation
+		var newURL = getNewURL( url, newAction )
+		this.setAttribute('data-target', newURL)
 	});
+
+
 }

@@ -17,4 +17,6 @@ def prepStream(streamURI):
     return stream
 
 def playStream(player):
-    return player.play()
+    player.play()
+    import pdb; pdb.set_trace()
+    return True

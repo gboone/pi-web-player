@@ -1,12 +1,33 @@
 radio:
   stations:
-    "889": "https://wyms.streamguys1.com/live.m3u"
-    "hyfn": "https://wyms.streamguys1.com/hyfin.m3u"
-    "414music": "https://wyms.streamguys1.com/414music_aac.m3u"
-    "rhythmlab": "https://wyms.streamguys1.com/rhythmLabRadio.m3u"
-    "wuwm": "http://wuwm.streamguys1.com/live.m3u"
-    "the current": "https://current.stream.publicradio.org/current.aac"
-    "wtmj": "https://prod-3-93-57-141.wostreaming.net/goodkarma-wtmjamaac-hlsc.m3u8/?source=v7player&user-id=b0f14cb5a95d32cc5f332cb5d257e072&us_privacy=1---&z=9641d8d433a44dabb641a0d3ea3c7ba9&p=1"
+    "889": 
+      "stream": "https://wyms.streamguys1.com/live.m3u"
+      "logo": "logo-889.jpg"
+      "info": True
+    "hyfin": 
+      "stream": "https://wyms.streamguys1.com/hyfin.m3u"
+      "logo": "logo-hyfin.jpg"
+      "info": False
+    "414music": 
+      "stream": "https://wyms.streamguys1.com/414music_aac.m3u"
+      "logo": "logo-414music.webp"
+      "info": False
+    "rhythmlab": 
+      "stream": "https://wyms.streamguys1.com/rhythmLabRadio.m3u"
+      "logo": "logo-rhythmlab.webp"
+      "info": False
+    "wuwm": 
+      "stream": "http://wuwm.streamguys1.com/live.m3u"
+      "logo": "logo-wuwm.jpg"
+      "info": False
+    "the-current":
+      "stream": "https://current.stream.publicradio.org/current.aac"
+      "logo": "logo-the-current.png"
+      "info": False
+    "wtmj": 
+      "stream": "https://prod-3-93-57-141.wostreaming.net/goodkarma-wtmjamaac-hlsc.m3u8/?source=v7player&user-id=b0f14cb5a95d32cc5f332cb5d257e072&us_privacy=1---&z=9641d8d433a44dabb641a0d3ea3c7ba9&p=1"
+      "logo": "logo-wtmj.jpg"
+      "info": False
   xspf:
     "889": "https://wyms.streamguys1.com/live.xspf"
     "hyfn": "https://wyms.streamguys1.com/hyfin.xspf"

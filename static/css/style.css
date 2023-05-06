@@ -1,0 +1,25 @@
+.station-data {
+	margin: 10px;
+	padding: 5px;
+	height: 100px;
+	width: 100%;
+	display: inline-block;
+}
+
+.station-data button {
+	margin-left: 20px;
+	height: 50px;
+	width: 50px;
+}
+.station-logo {
+/*	resize and crop image to fit 150x150px*/
+	width: 250px;
+	height: 100px;
+	object-fit: cover;
+}
+
+#button-stop-all {
+	width: 100%;
+	height: 100px;
+	margin: 20px 10px;
+}

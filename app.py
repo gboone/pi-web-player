@@ -8,12 +8,11 @@ import subprocess
 from flask_bootstrap import Bootstrap5
 from flask import Flask
 
-BOOTSTRAP_SERVE_LOCAL = True
 CONFIG = loadconfig.loadconfig("config.yml")
 STATIONS = CONFIG['radio']['stations']
 PLAYERS = {}
 for station in STATIONS:
-    streamURL = STATIONS[station]
+    streamURL = STATIONS[station]['stream']
     player = streamRadio.createPlayer(streamURL)
     PLAYERS[station] = player
 
@@ -26,16 +25,19 @@ else:
     FLASK_DEBUG = False
 
 app = Flask(__name__)
+app.config['BOOTSTRAP_SERVE_LOCAL'] = True
 bootstrap = Bootstrap5(app)
 # Routes
 
 
 @app.route("/")
 def index():
-    status = templatefunctions.getIndexData(PLAYERS)
+    status = templatefunctions.getIndexData(STATIONS, request, PLAYERS)
+    now_playing = []
     return render_template(
         "index.html",
         status=status,
+        now_playing=now_playing,
         bootstrap=bootstrap
     )
 
@@ -128,10 +130,11 @@ def streamPlayStop(stream):
 
 @app.route("/radio/stop-all/")
 def radioStopAll():
-    if localradio.stopAllPlayers(PLAYERS):
-        return {"stopped": "all players"}
+    stopped = localradio.stopAllPlayers(PLAYERS)
+    if stopped.__len__() > 0:
+        return {"stopped": stopped}
     else:
-        return {"error": "failed to stop some players"}
+        return {"stopped": "none"}
 
 
 @app.route("/radio/streams/")

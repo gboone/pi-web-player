@@ -9,11 +9,12 @@ def getStationData(stations, request, players):
     for station in stations:
         is_playing = "playing" if players[station].is_playing() else "stopped"
         streams[station] = {
-            "name": station,
-            "streamURL": stations[station],
             "API-route": "{}radio/{}/".format(baseurl, station),
-            "play": "{}radio/{}/?play".format(baseurl, station),
-            "stop": "{}radio/{}/?stop".format(baseurl, station),
+            "logo": stations[station]['logo'],
+            "name": station,
+            "play": "{}radio/{}?play".format(baseurl, station),
+            "stop": "{}radio/{}?stop".format(baseurl, station),
+            "streamURL": stations[station]['stream'],
             "status": is_playing
         }
     return streams
@@ -44,12 +45,10 @@ def getSysInfo():
     }
 
 
-def getIndexData(PLAYERS):
+def getIndexData(STATIONS, request, PLAYERS):
     indexdata = {}
     indexdata['sysinfo'] = getSysInfo()
-    indexdata['playing-stations'] = getActivePlayers(PLAYERS)
-    indexdata['stopped-stations'] = getStoppedPlayers(PLAYERS)
-    indexdata['all-stations'] = PLAYERS
+    indexdata['stations'] = getStationData(STATIONS, request, PLAYERS)
     return indexdata
 
 
