@@ -1,6 +1,9 @@
 venv/
 bin/
 lib/
+lib64/
+lib64
+share/
 *.pyc
 __pycache__/
 pyvenv.cfg
