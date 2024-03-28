@@ -42,3 +42,19 @@ radio:
     "rhythmlab": "https://wyms.streamguys1.com/rhythmLabRadio.xspf"
     "WUWM": "http://wuwm.streamguys1.com/live.xspf"
   nowplaying:
+network:
+  pis:
+    "pi-zero":
+      "ip": "192.160.0.74"
+      "role": "pi-hole"
+      "port": 53
+      "api-key": "8CTNOh9QU5/5sHM1l9NudVI1EQ/bgcfgwWVH59kLgPI="
+    "pi-one":
+      "ip": "192.160.0.225"
+      "role": "pi-hole"
+      "port": 53
+      "api-key": "Fd4jtnBn6mMHAzjg7/lNDQ="
+    "pi-five":
+      "ip": "192.168.0.70"
+      "role": "desktop"
+      "port": 22

@@ -39,11 +39,14 @@ def getStoppedPlayers(PLAYERS):
 
 
 def getSysInfo():
-    return {
+    sysinfo = {
         "cpu": localsystem.getCPU(),
         "disk": localsystem.getDF(),
-        "network": (localnetwork.isConnected(), localnetwork.currentIP())
+        "network": {
+            "self": [localnetwork.isConnected(), localnetwork.currentIP()]
+        }
     }
+    return sysinfo
 
 
 def getIndexData(STATIONS, request, PLAYERS):

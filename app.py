@@ -10,6 +10,7 @@ from flask import Flask
 
 CONFIG = loadconfig.loadconfig("config.yml")
 STATIONS = CONFIG['radio']['stations']
+PIHOLES = CONFIG['network']['pis']
 PLAYERS = {}
 for station in STATIONS:
     streamURL = STATIONS[station]['stream']
@@ -44,14 +45,19 @@ def index():
 
 @app.route("/network/")
 def network():
-    return {
-        "network": { 
-            "IP": localnetwork.currentIP(), 
-            "connected": localnetwork.isConnected() 
+    piHoles = localnetwork.getPiHoleData(PIHOLES)
+    network = {
+        "network": {
+            "self": {
+                "ip": localnetwork.currentIP(), 
+                "connected": localnetwork.isConnected(),
+                "hostname": 'localhost' 
+            },
         },
         "related": ["/uptime/", "/sysinfo/"]
     }
-
+    network['network'].append(piHoles)
+    return network
 
 @app.route("/time/")
 def uptime():

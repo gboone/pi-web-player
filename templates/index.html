@@ -40,14 +40,16 @@
 			</div>
 			
 			<div class="col-md-3">
-				<h3>Network</h3>
-				{% if status['sysinfo']['network'][0] %}
-					<p>Raspberry Pi is connected!</p>
-					<p><strong>IP Address:</strong>{{ status['sysinfo']['network'][1] }}</p>
+				<div class="row"><h3>Network</h3></div>
+				<pre>{{ status['sysinfo']['network']}}</pre>
+				{% if status['sysinfo']['network']['self'][0] %}
+					<div class="row"><p>Raspberry Pi is connected!</p></div>
+					<div class="row"><p><strong>IP Address:</strong>{{ status['sysinfo']['network'][1] }}</p></div>
 				{% else %}
-					<p>Raspberry Pi is not connected!</p>
-					<p>Maybe there's a network outage or the Pi is unplugged.</p>
+					<div class="row"><p>Raspberry Pi is not connected!</p></div>
+					<div class="row"><p>Maybe there's a network outage or the Pi is unplugged.</p></div>
 				{% endif %}
+				<div class="row"><h4>Other Pis</h4></div>
 			</div>
 		</div>
 		<!-- <row>

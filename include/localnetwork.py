@@ -12,3 +12,21 @@ def isConnected(dns="9.9.9.9"):
         return True
     except OSError:
         return False
+
+def isPiHoleConnected(ip):
+    return isConnected(ip)
+
+def getPiHoleData(servers):
+    piHoles = {}
+    for server in servers:
+        piHole = servers[server]
+        ip = piHole['ip']
+        connected = isPiHoleConnected(ip)
+        piHoles.append(
+            {server: {
+                'ip':  ip,
+                'connected': connected,
+                'hostname': server + ".local"
+            }}
+        )
+    return piHoles
