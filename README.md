@@ -21,7 +21,7 @@ sudo apt install python3 python3-dev python3-venv
 Install audio components:
 
 ```
-sudo apt install pulseaudio pulseaudio-module-zeroconf alsa-utils avahi-daemon pulsemixer
+sudo apt install pulseaudio pulseaudio-module-zeroconf alsa-utils avahi-daemon pulsemixer vlc libvlc-dev
 ```
 
 Clone this repo, then `cd` into the clone directory and create, then activate a virtual environment, and install dependencies.
