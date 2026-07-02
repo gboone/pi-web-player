@@ -124,7 +124,8 @@ def streamPlayStop(stream):
         UNSUPPORTED,
         PLATFORM
     )
-    status['status'] = "playing" if player.is_playing() else "stopped"
+    if status['status'] != "error":
+        status['status'] = streamRadio.getStatus(player)
     return status
 
 

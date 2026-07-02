@@ -67,24 +67,42 @@ for (var i = 0; i < buttons.length; i++) {
 		// the stop all button will have data-station "all" and data-action "stop-all"
 		// when this happens, we need to set the URL to "/radio/stop-all/"
 
+		var button = this
 		var request = new XMLHttpRequest();
 
+		button.textContent = "…"
 		request.open('GET', url, true);
 		request.onload = () => {
-			if ( request.status == 200 ) {
+			var data = {}
+			try {
+				data = JSON.parse(request.response)
+			} catch (err) {
+				data = { status: "error", message: "Unexpected response from server" }
+			}
+			if ( request.status == 200 && data.status != "error" ) {
 				console.log("Radio station " + station + " did: " + playOrStop)
+				// update buttons with new actions, text, and URLs
+				var newAction = setNewAction( playOrStop )
+				button.setAttribute('data-action', newAction)
+				var newTextStation = newActionText(newAction, station)
+				button.textContent = newTextStation
+				var newURL = getNewURL( url, newAction )
+				button.setAttribute('data-target', newURL)
 			} else {
-				console.log("Radio station " + station + " failed to " + playOrStop + " with status " + request.status)
+				// Surface the failure in the now-playing block
+				console.log("Radio station " + station + " failed to " + playOrStop + ": " + (data.message || "HTTP " + request.status))
+				radioStatus.textContent = "⚠️ Couldn't play " + station
+				stationName.textContent = data.message || "The stream failed to open. Check the stream URL and the Pi's network."
+				stationName.removeAttribute('hidden')
+				// leave the button as Play so the user can retry
+				button.textContent = playOrStop == "play" ? "Play" : "Stop"
 			}
 		}
+		request.onerror = () => {
+			radioStatus.textContent = "⚠️ Couldn't reach the Pi"
+			button.textContent = playOrStop == "play" ? "Play" : "Stop"
+		}
 		request.send();
-		// update buttons with new actions, text, and URLs
-		var newAction = setNewAction( playOrStop )
-		this.setAttribute('data-action', newAction)
-		var newTextStation = newActionText(newAction, station)
-		this.textContent = newTextStation
-		var newURL = getNewURL( url, newAction )
-		this.setAttribute('data-target', newURL)
 	});
 
 
