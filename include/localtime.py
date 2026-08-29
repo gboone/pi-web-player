@@ -18,3 +18,4 @@ def getLocalTime(utc=False):
     nowTime = localTime.strftime("%H:%M:%S")
     timeZone = localTime.astimezone().tzname()
     return (nowTime, timeZone)
+

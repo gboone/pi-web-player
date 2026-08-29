@@ -3,6 +3,7 @@ import sys
 import platform
 from include import localradio, localsystem, localtime, localnetwork
 from include import streamRadio, loadconfig, templatefunctions
+from include import magtaghelper
 import vlc
 import subprocess
 from flask_bootstrap import Bootstrap5
@@ -142,3 +143,18 @@ def radioStopAll():
 def radioStations():
     streams = templatefunctions.getStationData(STATIONS, request, PLAYERS)
     return streams
+
+@app.route("/magtag/")
+def magTag():
+    todayLunch = magtaghelper.today_lunch()
+    timeOfDay = magtaghelper.time_of_day()
+    weekday = magtaghelper.day_of_week()
+    import pdb; pdb.set_trace()
+    check_no_school = magtaghelper.check_no_school()
+    return {
+            "timeOfDay": timeOfDay, 
+            "weekday": weekday[0],
+            "weekend": weekday[1],
+            "lunch": todayLunch,
+            "schoolday": check_no_school[0]
+            }

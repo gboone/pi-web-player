@@ -10,11 +10,12 @@ var stopAllButton = document.getElementById("button-stop-all")
 
 function setNewAction( playOrStop ) {
 	if ( playOrStop == "stop" ) {
-			var newAction = "play"	
+			var newAction = "play"
 		} else {
 			var newAction = "stop"
 		}
-	return newAction
+	console.log("New action is: "+newAction)
+  return newAction
 }
 
 
@@ -24,7 +25,8 @@ function getNewURL( url, newAction ) {
 	} else {
 		var url = url.replace("play", "stop")
 	}
-	return url
+	console.log("New url is: "+url)
+  return url
 }
 
 
@@ -36,7 +38,7 @@ function getStationInfo( station ) {
 	request.open('GET', url, true)
 	request.send()
 	console.log(JSON.parse(request.response)['now_playing'])
-	var data = JSON.parse(request.response)
+	var data = JSON.parse(request.response)['now_playing']
 	return data
 }
 
@@ -45,17 +47,18 @@ function newActionText( newAction, station ) {
 	if ( newAction == "play" ) {
 		radioStatus.textContent = "Nothing playing now"
 		stationName.textContent = "Choose a station below"
-		var newTextStation = "Play" 
+		var newTextStation = "Play"
 	} else {
 		radioStatus.textContent = "Now playing: " + station
 		stationName.removeAttribute('hidden')
 		var newTextStation = "Stop"
 	}
-	return newTextStation
+  console.log(newTextStation)
+  return newTextStation
 	}
 
 
-// When a link with the class `station` is clicked, get the data-station and 
+// When a link with the class `station` is clicked, get the data-station and
 // data-action attributes. Then, send a GET request to the siteURL + radioEndpoint
 // with the `data-action` in the URL.
 for (var i = 0; i < buttons.length; i++) {
