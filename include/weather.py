@@ -1,27 +1,19 @@
 from datetime import datetime, date, time
 import requests
-import loadconfig
-
-CONFIG = loadconfig.loadconfig("config.yml")
-OPEN_WEATHER_TOKEN=CONFIG['other']['openweather-token']
-LOCATION=CONFIG['other']['openweather-location']
-DATA_SOURCE_URL = CONFIG['other']['openweather-baseurl']
-
-
-if len(OPEN_WEATHER_TOKEN) == 0:
-    raise RuntimeError(
-        "You need to set your token first. If you don't already have one, you can register for a free account at https://home.openweathermap.org/users/sign_up"
-    )
 
 def convertKtoF(temp):
     tempInK = temp*9/5-459.67
     return round(tempInK,1)
 
-def getTheWeather():
+def getTheWeather(token, location, baseurl):
   # Set up where we'll be fetching data from
-  params = {"q": LOCATION, "appid": OPEN_WEATHER_TOKEN}
+  if len(token) == 0:
+      raise RuntimeError(
+              "You must register a token at https://home.openweathermap.org/users/sign_up then add it to config.yml under `other`, with the name openweather-token."
+      )
+  params = {"q": location, "appid": token}
   
-  theWeather = requests.get(DATA_SOURCE_URL, params)
+  theWeather = requests.get(baseurl, params)
   theWeatherData = theWeather.json()
   
   currentTemp = convertKtoF(theWeather.json()['main']['temp'])

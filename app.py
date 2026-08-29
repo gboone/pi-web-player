@@ -3,7 +3,7 @@ import sys
 import platform
 from include import localradio, localsystem, localtime, localnetwork
 from include import streamRadio, loadconfig, templatefunctions
-from include import magtaghelper
+from include import magtaghelper, weather
 import vlc
 import subprocess
 from flask_bootstrap import Bootstrap5
@@ -12,8 +12,15 @@ from flask import Flask
 CONFIG = loadconfig.loadconfig("config.yml")
 STATIONS = CONFIG['radio']['stations']
 OTHER = CONFIG['other']
+
+# school URLs
 lunch_url = OTHER['mps-lunch']
 cal_url = OTHER['mps-calendar']
+
+# weather URLs
+ow_token   = OTHER['openweather-token']
+ow_location= OTHER['openweather-location']
+ow_baseurl = OTHER['openweather-baseurl']
 
 PLAYERS = {}
 for station in STATIONS:
@@ -154,10 +161,19 @@ def magTag():
     timeOfDay = magtaghelper.time_of_day()
     weekday = magtaghelper.day_of_week()
     check_no_school = magtaghelper.check_no_school(cal_url)
+    theWeather = weather.getTheWeather(ow_token,ow_location,ow_baseurl)
     return {
             "timeOfDay": timeOfDay, 
             "weekday": weekday[0],
             "weekend": weekday[1],
             "lunch": todayLunch,
-            "schoolday": check_no_school[0]
+            "schoolday": check_no_school[0],
+            "weather": {
+                "current_temp": theWeather[0],
+                "high_temp": theWeather[1],
+                "low_temp": theWeather[2],
+                "conditions": theWeather[3],
+                "c_description": theWeather[4],
+                "c_icon": theWeather[5]
+                }
             }
