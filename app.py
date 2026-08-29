@@ -160,9 +160,13 @@ def magTag():
     todayLunch = magtaghelper.today_lunch(lunch_url)
     timeOfDay = magtaghelper.time_of_day()
     weekday = magtaghelper.day_of_week()
+    today = magtaghelper.today()
     check_no_school = magtaghelper.check_no_school(cal_url)
     theWeather = weather.getTheWeather(ow_token,ow_location,ow_baseurl)
     return {
+            "todayDay": today['Day'],
+            "todayMonth": today['Month'],
+            "todayYear": today['Year'],
             "timeOfDay": timeOfDay, 
             "weekday": weekday[0],
             "weekend": weekday[1],
