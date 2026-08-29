@@ -11,6 +11,10 @@ from flask import Flask
 
 CONFIG = loadconfig.loadconfig("config.yml")
 STATIONS = CONFIG['radio']['stations']
+OTHER = CONFIG['other']
+lunch_url = OTHER['mps-lunch']
+cal_url = OTHER['mps-calendar']
+
 PLAYERS = {}
 for station in STATIONS:
     streamURL = STATIONS[station]['stream']
@@ -146,11 +150,10 @@ def radioStations():
 
 @app.route("/magtag/")
 def magTag():
-    todayLunch = magtaghelper.today_lunch()
+    todayLunch = magtaghelper.today_lunch(lunch_url)
     timeOfDay = magtaghelper.time_of_day()
     weekday = magtaghelper.day_of_week()
-    import pdb; pdb.set_trace()
-    check_no_school = magtaghelper.check_no_school()
+    check_no_school = magtaghelper.check_no_school(cal_url)
     return {
             "timeOfDay": timeOfDay, 
             "weekday": weekday[0],

@@ -2,12 +2,6 @@ from bs4 import BeautifulSoup
 from datetime import datetime, time, date, timedelta
 import requests
 from icalendar import Calendar, Event
-import loadconfig
-
-config = loadconfig.loadconfig("config.yml")
-
-MPS_LUNCH_URL=config['other']['mps-lunch']
-MPS_CAL = config['other']['mps-calendar']
 
 month = f"{datetime.today():%B}"
 day = f"{datetime.today().day}"
@@ -15,8 +9,6 @@ year = f"{datetime.today().year}"
 weekday = f"{datetime.now():%A}"
 weekday_int = date.weekday(datetime.now())
 
-school_calendar_data = requests.get(MPS_CAL).text
-school_calendar = Calendar.from_ical(school_calendar_data)
 
 def time_of_day():
   now = datetime.now()
@@ -35,8 +27,8 @@ def day_of_week():
     else:
         return (weekday, 'weekday')
     
-def today_lunch():
-  lunch_response = requests.get(MPS_LUNCH_URL)
+def today_lunch(lunch_url):
+  lunch_response = requests.get(lunch_url)
   lunch_doc = lunch_response.text
   soup = BeautifulSoup(lunch_doc, 'html.parser')
   today_lunch = soup.find_all("strong", string=f"{month} {day}:")
@@ -45,7 +37,9 @@ def today_lunch():
   else:
     return today_lunch[0].text
 
-def check_no_school(check_date=date.today()):
+def check_no_school(url, check_date=date.today()):
+  school_calendar_data=requests.get(url).text
+  school_calendar = Calendar.from_ical(school_calendar_data)
   events = school_calendar.events
   # If the date to check is a weekend, exit early.
   if date.weekday(check_date) in (5,6):
