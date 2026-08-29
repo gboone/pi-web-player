@@ -27,6 +27,12 @@ def day_of_week():
     else:
         return (weekday, 'weekday')
     
+def today():
+    return {
+            "Day": day,
+            "Month": month,
+            "Year": year
+            }
 def today_lunch(lunch_url):
   lunch_response = requests.get(lunch_url)
   lunch_doc = lunch_response.text
