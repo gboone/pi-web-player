@@ -12,11 +12,11 @@ weekday_int = date.weekday(datetime.now())
 
 def time_of_day():
   now = datetime.now()
-  if now.hour < 12:
+  if 4 < now.hour < 12:
       return "Morning"
-  elif now.hour > 12 & now.hour < 18:
+  elif 12 < now.hour < 18:
       return "Afternoon"
-  elif now.hour > 18 & now.hour < 22:
+  elif 18 < now.hour < 21:
       return "Evening"
   else:
       return "Night"
