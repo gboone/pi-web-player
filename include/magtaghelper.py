@@ -3,7 +3,7 @@ from datetime import datetime, time, date, timedelta
 import requests
 from icalendar import Calendar, Event
 
-month = f"{datetime.today()}"
+month = f"{datetime.today().month}"
 day = f"{datetime.today().day}"
 year = f"{datetime.today().year}"
 weekday = f"{datetime.now():%A}"
