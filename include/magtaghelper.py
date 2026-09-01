@@ -53,7 +53,7 @@ def check_no_school(url, check_date=date.today()):
   # Iterate through all the events in the calendar if any overlap with today
   # that means there's no school.
   for event in events:
-      if event.DTSTART <= check_date <= event.DTEND: 
+      if event.DTSTART <= check_date < event.DTEND: 
           school_status = f"No school: {event['SUMMARY']}"
           return (school_status, check_date, event.DTSTART, event.DTEND)
   # If the loop does not match any days, then it is unforturnately a school day
