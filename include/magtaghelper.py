@@ -33,15 +33,21 @@ def today():
             "Month": month,
             "Year": year
             }
-def today_lunch(lunch_url):
-  lunch_response = requests.get(lunch_url)
-  lunch_doc = lunch_response.text
-  soup = BeautifulSoup(lunch_doc, 'html.parser')
-  today_lunch = soup.find_all("strong", string=f"{month} {day}:")
+
+def today_lunch(lunch_url, lunch_paths, lunch_params):
+  lunch_params['ServingDate']= datetime.strftime(datetime.now(), "%m/%d/%Y")
+  lunch_response = requests.get(f"{lunch_url}{lunch_paths}/", params=lunch_params)
+  lunch_doc = lunch_response.json()
+  #soup = BeautifulSoup(lunch_doc, 'html.parser')
+  #today_lunch = soup.find_all("strong", string=f"{month} {day}:")
+  
   if today_lunch == []:
     return "No lunch today"
   else:
-    return today_lunch[0].text
+    entrees = [entree['MenuItemDescription'] for entree in lunch_doc['ENTREES']]
+    veggies = [veggie['MenuItemDescription'] for veggie in lunch_doc['VEGETABLES']]
+    fruits  = [fruits['MenuItemDescription'] for fruits in lunch_doc['FRUITS']]
+    return {"entrees": entrees, "veggies": veggies, "fruits": fruits}
 
 def check_no_school(url, check_date=date.today()):
   school_calendar_data=requests.get(url).text

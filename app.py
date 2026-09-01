@@ -14,7 +14,9 @@ STATIONS = CONFIG['radio']['stations']
 OTHER = CONFIG['other']
 
 # school URLs
-lunch_url = OTHER['mps-lunch']
+lunch_url_base   = OTHER['school-cafe-baseurl']
+lunch_url_paths  = OTHER['school-cafe-paths']
+lunch_url_params = OTHER['school-cafe-params']
 cal_url = OTHER['mps-calendar']
 
 # weather URLs
@@ -157,7 +159,7 @@ def radioStations():
 
 @app.route("/magtag/")
 def magTag():
-    todayLunch = magtaghelper.today_lunch(lunch_url)
+    todayLunch = magtaghelper.today_lunch(lunch_url_base, lunch_url_paths, lunch_url_params)
     timeOfDay = magtaghelper.time_of_day()
     weekday = magtaghelper.day_of_week()
     today = magtaghelper.today()
