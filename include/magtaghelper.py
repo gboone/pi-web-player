@@ -41,13 +41,20 @@ def today_lunch(lunch_url, lunch_paths, lunch_params):
   #soup = BeautifulSoup(lunch_doc, 'html.parser')
   #today_lunch = soup.find_all("strong", string=f"{month} {day}:")
   
-  if today_lunch == []:
-    return "No lunch today"
-  else:
+  try:
     entrees = [entree['MenuItemDescription'] for entree in lunch_doc['ENTREES']]
     veggies = [veggie['MenuItemDescription'] for veggie in lunch_doc['VEGETABLES']]
     fruits  = [fruits['MenuItemDescription'] for fruits in lunch_doc['FRUITS']]
     return {"entrees": entrees, "veggies": veggies, "fruits": fruits}
+  except ValueError:
+      return 'No lunch today'
+  #if len(lunch_doc) > 0:
+  #  return "No lunch today"
+  #else:
+  #  entrees = [entree['MenuItemDescription'] for entree in lunch_doc['ENTREES']]
+  #  veggies = [veggie['MenuItemDescription'] for veggie in lunch_doc['VEGETABLES']]
+  #  fruits  = [fruits['MenuItemDescription'] for fruits in lunch_doc['FRUITS']]
+  #  return {"entrees": entrees, "veggies": veggies, "fruits": fruits}
 
 def check_no_school(url, check_date=date.today()):
   school_calendar_data=requests.get(url).text
@@ -60,7 +67,7 @@ def check_no_school(url, check_date=date.today()):
   # that means there's no school.
   for event in events:
       if event.DTSTART <= check_date < event.DTEND: 
-          school_status = f"No school: {event['SUMMARY']}"
+          school_status = f"{check_date}, No school: {event['SUMMARY']}"
           return (school_status, check_date, event.DTSTART, event.DTEND)
   # If the loop does not match any days, then it is unforturnately a school day
   return ("School day", check_date)
