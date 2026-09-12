@@ -41,9 +41,8 @@ else:
 app = Flask(__name__)
 app.config['BOOTSTRAP_SERVE_LOCAL'] = True
 bootstrap = Bootstrap5(app)
+
 # Routes
-
-
 @app.route("/")
 def index():
     status = templatefunctions.getIndexData(STATIONS, request, PLAYERS)

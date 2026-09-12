@@ -45,16 +45,10 @@ def today_lunch(lunch_url, lunch_paths, lunch_params):
     entrees = [entree['MenuItemDescription'] for entree in lunch_doc['ENTREES']]
     veggies = [veggie['MenuItemDescription'] for veggie in lunch_doc['VEGETABLES']]
     fruits  = [fruits['MenuItemDescription'] for fruits in lunch_doc['FRUITS']]
+    import pdb; pdb.set_trace()
     return {"entrees": entrees, "veggies": veggies, "fruits": fruits}
-  except ValueError:
+  except KeyError:
       return 'No lunch today'
-  #if len(lunch_doc) > 0:
-  #  return "No lunch today"
-  #else:
-  #  entrees = [entree['MenuItemDescription'] for entree in lunch_doc['ENTREES']]
-  #  veggies = [veggie['MenuItemDescription'] for veggie in lunch_doc['VEGETABLES']]
-  #  fruits  = [fruits['MenuItemDescription'] for fruits in lunch_doc['FRUITS']]
-  #  return {"entrees": entrees, "veggies": veggies, "fruits": fruits}
 
 def check_no_school(url, check_date=date.today()):
   school_calendar_data=requests.get(url).text
