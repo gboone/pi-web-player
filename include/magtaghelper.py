@@ -45,7 +45,6 @@ def today_lunch(lunch_url, lunch_paths, lunch_params):
     entrees = [entree['MenuItemDescription'] for entree in lunch_doc['ENTREES']]
     veggies = [veggie['MenuItemDescription'] for veggie in lunch_doc['VEGETABLES']]
     fruits  = [fruits['MenuItemDescription'] for fruits in lunch_doc['FRUITS']]
-    import pdb; pdb.set_trace()
     return {"entrees": entrees, "veggies": veggies, "fruits": fruits}
   except KeyError:
       return 'No lunch today'

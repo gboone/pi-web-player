@@ -42,3 +42,16 @@ radio:
     "rhythmlab": "https://wyms.streamguys1.com/rhythmLabRadio.xspf"
     "WUWM": "http://wuwm.streamguys1.com/live.xspf"
   nowplaying:
+other:
+  "openweather-token": ""
+  "openweather-location": "Milwaukee"
+  "openweather-baseurl": "http://api.openweathermap.org/data/2.5/weather"
+  "mps-calendar": "https://www.milwaukeepublicschools.org/fs/calendar-manager/events.ics?calendar_ids=4"
+  "mps-lunch": "https://www.milwaukeepublicschools.org/students/meals"
+  "school-cafe-baseurl": "https://webapis.schoolcafe.com/api/"
+  "school-cafe-paths": "CalendarView/GetDailyMenuitems"
+  "school-cafe-params":
+    "SchoolId": ""
+    "ServingLine": ""
+    "MealType": ""
+
