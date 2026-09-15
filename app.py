@@ -20,9 +20,14 @@ lunch_url_params = OTHER['school-cafe-params']
 cal_url = OTHER['mps-calendar']
 
 # weather URLs
-ow_token   = OTHER['openweather-token']
-ow_location= OTHER['openweather-location']
-ow_baseurl = OTHER['openweather-baseurl']
+#ow_token   = OTHER['openweather-token']
+#ow_location= OTHER['openweather-location']
+#ow_baseurl = OTHER['openweather-baseurl']
+
+weather_baseurl = OTHER['weather-baseurl']
+weather_latitude = OTHER['weather-latitude']
+weather_longitude = OTHER['weather-longitude']
+weather_params = OTHER['weather-forecast-params']
 
 PLAYERS = {}
 for station in STATIONS:
@@ -163,7 +168,7 @@ def magTag():
     weekday = magtaghelper.day_of_week()
     today = magtaghelper.today()
     check_no_school = magtaghelper.check_no_school(cal_url)
-    theWeather = weather.getTheWeather(ow_token,ow_location,ow_baseurl)
+    theWeather = weather.getTheWeather(weather_baseurl, weather_latitude, weather_longitude, weather_params)
     return {
             "todayDay": today['Day'],
             "todayMonth": today['Month'],
@@ -173,12 +178,5 @@ def magTag():
             "weekend": weekday[1],
             "lunch": todayLunch,
             "schoolday": check_no_school[0],
-            "weather": {
-                "current_temp": theWeather[0],
-                "high_temp": theWeather[1],
-                "low_temp": theWeather[2],
-                "conditions": theWeather[3],
-                "c_description": theWeather[4],
-                "c_icon": theWeather[5]
-                }
+            "weather": theWeather
             }
