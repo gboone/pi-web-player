@@ -41,19 +41,19 @@ def today_lunch(lunch_url, lunch_paths, lunch_params):
   
   try:
     entrees = [entree['MenuItemDescription'] for entree in lunch_doc['ENTREES']]
-  except NameError:
+  except (NameError,KeyError):
       entrees = []
   try:
     veggies = [veggie['MenuItemDescription'] for veggie in lunch_doc['VEGETABLES']]
-  except NameError:
+  except (NameError, KeyError):
     veggies = []
   try:
     fruits  = [fruits['MenuItemDescription'] for fruits in lunch_doc['FRUITS']]
-  except NameError:
+  except (NameError, KeyError):
     fruits = []
   try:
     grains = [grain['MenuItemDescription'] for grain in lunch_doc['GRAINS']]
-  except NameError, KeyError:
+  except (NameError, KeyError):
       grains = []
   for entree in entrees:
         if "wow butter meal" in entree.lower():
