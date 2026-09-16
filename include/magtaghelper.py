@@ -38,23 +38,29 @@ def today_lunch(lunch_url, lunch_paths, lunch_params):
   lunch_params['ServingDate']= datetime.strftime(datetime.now(), "%m/%d/%Y")
   lunch_response = requests.get(f"{lunch_url}{lunch_paths}/", params=lunch_params)
   lunch_doc = lunch_response.json()
-  #soup = BeautifulSoup(lunch_doc, 'html.parser')
-  #today_lunch = soup.find_all("strong", string=f"{month} {day}:")
   
   try:
     entrees = [entree['MenuItemDescription'] for entree in lunch_doc['ENTREES']]
+  except NameError:
+      entrees = []
+  try:
     veggies = [veggie['MenuItemDescription'] for veggie in lunch_doc['VEGETABLES']]
+  except NameError:
+    veggies = []
+  try:
     fruits  = [fruits['MenuItemDescription'] for fruits in lunch_doc['FRUITS']]
+  except NameError:
+    fruits = []
+  try:
     grains = [grain['MenuItemDescription'] for grain in lunch_doc['GRAINS']]
-    for entree in entrees:
+  except NameError, KeyError:
+      grains = []
+  for entree in entrees:
         if "wow butter meal" in entree.lower():
           entrees.remove(entree)
         if "cheese stick" in entree.lower():
             entrees.remove(entree)
-    print(f"The lunch: {entrees} with {veggies}, {fruits}, and {grains}.")
-    theLunch = {"entrees": entrees, "veggies": veggies, "fruits": fruits, "grains": grains}
-  except KeyError:
-    theLunch = 'No lunch today'
+  theLunch = {"entrees": entrees, "veggies": veggies, "fruits": fruits, "grains": grains}
   return theLunch
 
 def check_no_school(url, check_date=date.today()):
