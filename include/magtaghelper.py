@@ -45,9 +45,17 @@ def today_lunch(lunch_url, lunch_paths, lunch_params):
     entrees = [entree['MenuItemDescription'] for entree in lunch_doc['ENTREES']]
     veggies = [veggie['MenuItemDescription'] for veggie in lunch_doc['VEGETABLES']]
     fruits  = [fruits['MenuItemDescription'] for fruits in lunch_doc['FRUITS']]
-    return {"entrees": entrees, "veggies": veggies, "fruits": fruits}
+    grains = [grain['MenuItemDescription'] for grain in lunch_doc['GRAINS']]
+    for entree in entrees:
+        if "wow butter meal" in entree.lower():
+          entrees.remove(entree)
+        if "cheese stick" in entree.lower():
+            entrees.remove(entree)
+    print(f"The lunch: {entrees} with {veggies}, {fruits}, and {grains}.")
+    theLunch = {"entrees": entrees, "veggies": veggies, "fruits": fruits, "grains": grains}
   except KeyError:
-      return 'No lunch today'
+    theLunch = 'No lunch today'
+  return theLunch
 
 def check_no_school(url, check_date=date.today()):
   school_calendar_data=requests.get(url).text
