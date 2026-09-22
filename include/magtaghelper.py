@@ -19,9 +19,9 @@ def day_of_week():
     weekday_int = now['weekday_int']
     weekday = now['weekday']
     if weekday_int in (0,6):
-        return (weekday, False)
-    else:
         return (weekday, True)
+    else:
+        return (weekday, False)
     
 def today():
     now = datetime.now()
