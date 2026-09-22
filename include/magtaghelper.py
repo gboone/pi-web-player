@@ -3,13 +3,6 @@ from datetime import datetime, time, date, timedelta
 import requests
 from icalendar import Calendar, Event
 
-month = f"{datetime.today().month}"
-day = f"{datetime.today().day}"
-year = f"{datetime.today().year}"
-weekday = f"{datetime.now():%A}"
-weekday_int = date.weekday(datetime.now())
-
-
 def time_of_day():
   now = datetime.now()
   if 4 < now.hour < 12:
@@ -22,16 +15,26 @@ def time_of_day():
       return "Night"
 
 def day_of_week():
-    if weekday_int in (5,6):
-        return (weekday,'weekend')
+    now = today()
+    weekday_int = now['weekday_int']
+    weekday = now['weekday']
+    if weekday_int in (0,6):
+        return (weekday, False)
     else:
-        return (weekday, 'weekday')
+        return (weekday, True)
     
 def today():
+    now = datetime.now()
+    day = now.day
+    month = now.month
+    year = now.year
     return {
             "Day": day,
             "Month": month,
-            "Year": year
+            "Year": year,
+            "weekday": f"{now:%A}",
+            "weekday_int": f"{now:%w}",
+            "ts": now
             }
 
 def today_lunch(lunch_url, lunch_paths, lunch_params):

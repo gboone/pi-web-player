@@ -174,8 +174,7 @@ def magTag():
             "todayMonth": today['Month'],
             "todayYear": today['Year'],
             "timeOfDay": timeOfDay, 
-            "weekday": weekday[0],
-            "weekend": weekday[1],
+            "weekend": weekday,
             "lunch": todayLunch,
             "schoolday": check_no_school[0],
             "weather": theWeather
